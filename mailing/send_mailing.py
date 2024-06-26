@@ -1,9 +1,11 @@
 import smtplib
+
+from dateutil.relativedelta import relativedelta
 from django.core.mail import send_mail
 from datetime import datetime, timedelta
 import pytz
 from config import settings
-from mailing.models import MailingSettings, MailingStatus, LOGS_STATUS_CHOICES
+from mailing.models import MailingSettings, MailingStatus
 
 
 def send_mailing():

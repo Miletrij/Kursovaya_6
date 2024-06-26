@@ -23,7 +23,6 @@ load_dotenv(PATH_DB)
 USER_DB = os.getenv("USER_DB")
 PASSWORD_DB = os.getenv("PASSWORD_DB")
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
 
     'mailing',
     'recipient',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mailing',
+        'NAME': os.getenv('NAME'),
         'USER': USER_DB,
         'PASSWORD': PASSWORD_DB
     }
@@ -138,3 +138,28 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "users.User"
+LOGIN_URL = "/users/login/"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'miletrij@yandex.ru'
+EMAIL_HOST_PASSWORD = 'clutngsetznrynmc'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Caches
+CACHE_ENABLED = os.getenv('CACHE_ENABLED', False) == 'True'
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv('CACHE_LOCATION'),
+        }
+    }

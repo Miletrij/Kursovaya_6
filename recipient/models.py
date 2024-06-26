@@ -13,4 +13,4 @@ class Recipient(models.Model):
         verbose_name_plural = "Получатели"
 
     def __str__(self):
-        return self.name, self.email
+        return self.email

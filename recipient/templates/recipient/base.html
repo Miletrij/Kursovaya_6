@@ -19,14 +19,7 @@
                 </svg>
                 <span class="fs-4">Pricing example</span>
             </a>
-
-            <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'recipient:list' %}">Все получатели</a>
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'recipient:create' %}">Добавить получателя</a>
-                 <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'mailing:create' %}">Создать рассылку</a>
-                 <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'mailing:settings_list' %}">Планирование рассылок</a>
-
-            </nav>
+            {% include 'includes/inc_main_menu.html' %}
         </div>
     </header>
 

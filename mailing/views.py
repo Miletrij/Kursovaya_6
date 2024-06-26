@@ -4,15 +4,15 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView, D
 from mailing.models import MailingMessage, MailingSettings, MailingStatus
 
 
-class MessageCreateView(CreateView):
+class MailingMessageCreateView(CreateView):
     model = MailingMessage
-    fields = ['title', 'content',]
+    fields = ['title', 'content', ]
     success_url = reverse_lazy('mailing:list')
 
 
 class MailingMessageUpdateView(UpdateView):
     model = MailingMessage
-    fields = ['title', 'content']
+    fields = ['title', 'content', ]
     success_url = reverse_lazy('mailing:list')
 
 
