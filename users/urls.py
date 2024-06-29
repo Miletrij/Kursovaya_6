@@ -9,7 +9,7 @@ app_name = UsersConfig.name
 
 urlpatterns = [
     path("login/", UserLoginView.as_view(), name="login"),
-    path("logout/", LogoutView.as_view(), name="logout"),
+    path("logout", LogoutView.as_view(), name="logout"),
     path("register/", UserCreateView.as_view(), name="register"),
     path("email-confirm/<str:token>/", email_verification, name="email-confirm"),
     path("profile/", login_required(ProfileView.as_view()), name="profile"),
