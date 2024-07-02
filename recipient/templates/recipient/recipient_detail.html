@@ -11,8 +11,12 @@
                    Описание: {{ object.description }}
                 </h4>
             </div>
+            {% if user == object.owner or user.is_superuser %}
+            <a href="{% url 'recipient:edit' object.pk %}" type="button"
+                       class="btn btn-sm btn-block btn-outline-primary">изменение</a>
             <a href="{% url 'recipient:delete' object.pk %}" type="button"
                        class="btn btn-sm btn-block btn-outline-primary">удаление</a>
+            {% endif %}
         </div>
     </div>
 </div>

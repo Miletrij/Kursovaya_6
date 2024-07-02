@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'recipient/base.html' %}
 
-</body>
-</html>
+{% block content %}
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <p>Хотите удалить рассылку {{ object.title }}?</p>
+                        <button type="submit" class="btn btn-success">Удалить</button>
+                        <a class="btn btn-primary" href="{% url 'mailing:settings_list' %}" role="button">Отмена</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

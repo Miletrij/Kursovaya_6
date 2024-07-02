@@ -1,30 +1,40 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from recipient.forms import RecipientForm
 from recipient.models import Recipient
 
 
-class RecipientListView(ListView):
+class RecipientListView(LoginRequiredMixin, ListView):
     model = Recipient
 
 
-class RecipientDetailView(DetailView):
+class RecipientDetailView(LoginRequiredMixin, DetailView):
     model = Recipient
 
 
-class RecipientCreateView(CreateView):
+class RecipientCreateView(LoginRequiredMixin, CreateView):
     model = Recipient
-    fields = ['email', 'name', 'description']
+    form_class = RecipientForm
     success_url = reverse_lazy('recipient:list')
 
+    def form_valid(self, form):
+        recipient = form.save()
+        recipient.owner = self.request.user
+        recipient.save()
+        return super().form_valid(form)
 
-class RecipientUpdateView(UpdateView):
+
+class RecipientUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipient
-    fields = ['email', 'name', 'description']
-    success_url = reverse_lazy('recipient:list')
+    form_class = RecipientForm
+
+    def get_success_url(self):
+        return reverse_lazy('recipient:view', kwargs={'pk': self.get_object().id})
 
 
-class RecipientDeleteView(DeleteView):
+class RecipientDeleteView(LoginRequiredMixin, DeleteView):
     model = Recipient
     success_url = reverse_lazy('recipient:list')
