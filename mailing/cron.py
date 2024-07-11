@@ -13,21 +13,21 @@ def send_mailing():
     current_time = datetime.now(zone)
 
     mailing_settings = MailingSettings.objects.filter(first_datetime__lte=current_time).filter(
-        settings_status__in=['Create', 'Started'])
+        sending_status__in=['Create', 'Started'])
     for mailing in mailing_settings:
-        if mailing.next_datetime is None:
-            mailing.next_datetime = current_time
+        if mailing.first_datetime is None:
+            mailing.first_datetime = current_time
         title = mailing.message.title
         content = mailing.message.content
-        mailing.settings_status = 'Started'
+        mailing.sending_status = 'Started'
         mailing.save()
         try:
-            if mailing.end_time < mailing.next_datetime:
-                mailing.next_datetime = current_time
-                mailing.settings_status = 'Done'
+            if mailing.end_time < mailing.first_datetime:
+                mailing.first_datetime = current_time
+                mailing.sending_status = 'Done'
                 mailing.save()
                 continue
-            if mailing.next_datetime <= current_time:
+            if mailing.first_datetime <= current_time:
                 server_response = send_mail(
                     subject=title,
                     message=content,
