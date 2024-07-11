@@ -37,7 +37,7 @@ def send_mailing():
                 )
                 if server_response == 1:
                     server_response = 'Сообщение отправлено'
-                MailingStatus.objects.create(status='success', mailing_response=server_response, mailing_id=mailing)
+                    MailingStatus.objects.create(sending_status='success', mailing_response=server_response, mailing_list=mailing)
 
                 if mailing.sending_period == 'daily':
                     mailing.next_datetime = current_time + timedelta(days=1)
@@ -51,4 +51,4 @@ def send_mailing():
             mailing.save()
 
         except smtplib.SMTPException as error:
-            MailingStatus.objects.create(status='fail', mailing_response=error, mailing_id=mailing)
+            MailingStatus.objects.create(sending_status='fail', mailing_response=error, mailing_list=mailing)
