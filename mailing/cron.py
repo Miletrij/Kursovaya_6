@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 from datetime import datetime, timedelta
 import pytz
 from config import settings
-from mailing.models import MailingSettings, MailingStatus
+from mailing.models import MailingSettings, MailingStatus, LOGS_STATUS_CHOICES
 
 
 def send_mailing():
@@ -37,7 +37,7 @@ def send_mailing():
                 )
                 if server_response == 1:
                     server_response = 'Сообщение отправлено'
-                    MailingStatus.objects.create(sending_status='success', mailing_response=server_response, mailing_list=mailing)
+                MailingStatus.objects.create(sending_status=True, mailing_response=server_response, mailing_list=mailing)
 
                 if mailing.sending_period == 'daily':
                     mailing.next_datetime = current_time + timedelta(days=1)
@@ -51,4 +51,4 @@ def send_mailing():
             mailing.save()
 
         except smtplib.SMTPException as error:
-            MailingStatus.objects.create(sending_status='fail', mailing_response=error, mailing_list=mailing)
+            MailingStatus.objects.create(mailing_response=error, mailing_list=mailing)
