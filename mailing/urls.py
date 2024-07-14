@@ -4,7 +4,7 @@ from mailing.apps import MailingConfig
 from mailing.views import MailingMessageListView, MailingMessageDetailView, MailingMessageUpdateView, \
     MailingMessageDeleteView, MailingSettingsCreateView, MailingSettingsUpdateView, \
     MailingSettingsListView, MailingSettingsDetailView, MailingSettingsDeleteView, MailingStatusListView, \
-    MailingStatusDeleteView, MailingMessageCreateView, MailingMessageTemplateView
+    MailingStatusDetailView, MailingMessageCreateView, MailingMessageTemplateView
 
 app_name = MailingConfig.name
 
@@ -20,6 +20,6 @@ urlpatterns = [
     path('settings/<int:pk>/', MailingSettingsDetailView.as_view(), name='settings_view'),
     path('settings/<int:pk>/update/', MailingSettingsUpdateView.as_view(), name='settings_edit'),
     path('settings/<int:pk>/delete/', MailingSettingsDeleteView.as_view(), name='settings_delete'),
-    path('status/', MailingStatusListView.as_view(), name='status_list'),
-    path('status/<int:pk>/delete/', MailingStatusDeleteView.as_view(), name='status_delete'),
+    path('status_list', MailingStatusListView.as_view(), name='mailing_status_list'),
+    path('status_detail/<int:pk>', MailingStatusDetailView.as_view(), name='mailing_status_detail'),
 ]

@@ -107,7 +107,12 @@ class MailingSettingsDeleteView(LoginRequiredMixin, DeleteView):
 class MailingStatusListView(LoginRequiredMixin, ListView):
     model = MailingStatus
 
+    def get_queryset(self):
+        queryset = MailingStatus.objects.all()
+        if not (self.request.user.is_superuser or self.request.user.has_perm('mailing.can_change_setting_status')):
+            queryset = queryset.filter(owner=self.request.user)
+        return queryset
 
-class MailingStatusDeleteView(LoginRequiredMixin, DeleteView):
+
+class MailingStatusDetailView(LoginRequiredMixin, DetailView):
     model = MailingStatus
-    success_url = reverse_lazy('mailing:status_list')

@@ -20,17 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # DB Settings
 PATH_DB = BASE_DIR / '.env'
 load_dotenv(PATH_DB)
-USER_DB = os.getenv("USER_DB")
-PASSWORD_DB = os.getenv("PASSWORD_DB")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@lild+l0zmh5nd+4x@b-fcbrzuy8+(0*l3)+#m_fri5f9lw&z1'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG") == "True"
 
 ALLOWED_HOSTS = []
 
@@ -89,12 +87,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('NAME'),
-        'USER': USER_DB,
-        'PASSWORD': PASSWORD_DB
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv("DB_USER"),
+        'PASSWORD': os.getenv("DB_PASSWORD")
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -148,12 +145,12 @@ LOGIN_URL = "/users/login/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'miletrij@yandex.ru'
-EMAIL_HOST_PASSWORD = 'clutngsetznrynmc'
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
+EMAIL_HOST = os.getenv('EMAIL_HOST'),
+EMAIL_PORT = os.getenv('EMAIL_PORT'),
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER'),
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD'),
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS'),
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL'),
 
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
