@@ -48,6 +48,7 @@ class MailingStatus(models.Model):
     mailing_response = models.TextField(verbose_name="почтовый запрос (ответ сервера)")
     mailing_list = models.ForeignKey(MailingSettings, on_delete=models.CASCADE, verbose_name='рассылка')
     recipient = models.ForeignKey(Recipient, on_delete=models.CASCADE, verbose_name='клиент рассылки', **NULLABLE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец', **NULLABLE)
 
     class Meta:
         verbose_name = 'Статус отправки'
